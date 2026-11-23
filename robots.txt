@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dan7h0ny.github.io/danthony-mh-web/sitemap.xml
