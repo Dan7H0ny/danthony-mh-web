@@ -2,12 +2,12 @@
 
 Sitio estático (HTML + CSS + JS, sin dependencias). Se publica gratis.
 
-## 1. Antes de publicar (obligatorio)
+## 1. Datos y configuración
 
-1. **`main.js`** → al inicio, completa `CONFIG`:
-   - El WhatsApp y el correo ya están configurados (codificados) en `_k`.
-2. Cuando tengas la URL final, reemplaza `https://TU-DOMINIO.com` en
-   `index.html`, `robots.txt` y `sitemap.xml`.
+- **Publicado en:** https://dan7h0ny.github.io/danthony-mh-web/ (GitHub Pages, rama `main`). Cada `git push` actualiza la web.
+- **Contacto:** el WhatsApp y el correo están codificados en `_k` (inicio de `main.js`), nunca en texto plano.
+- **Formulario por correo:** usa FormSubmit (gratis). El primer envío manda un correo de activación a tu Gmail; hay que pulsar *Activate Form* una sola vez.
+- **Dominio propio:** si compras uno, reemplaza la URL en `index.html`, `robots.txt` y `sitemap.xml`.
 
 Para probar localmente: doble clic en `index.html`.
 
