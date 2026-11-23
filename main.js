@@ -1,14 +1,15 @@
 /* =========================================================
-   CONFIGURACIÓN — EDITA ESTOS DATOS ANTES DE PUBLICAR
+   CONTACTO (protegido)
+   El número y el correo NO están escritos en texto plano: se
+   guardan codificados y solo se arman en el momento en que un
+   visitante pulsa un botón. Así los robots que recorren la web
+   o GitHub buscando teléfonos/correos no los encuentran.
    ========================================================= */
-const CONFIG = {
-  // Número de WhatsApp con código de país, solo dígitos. Bolivia = 591. Ej: "59171234567"
-  whatsapp: "",
-  // Correo profesional. Ej: "contacto@danthonymh.com"
-  email: "",
-  // URL de tu perfil de LinkedIn (déjalo vacío para ocultarlo)
-  linkedin: "",
+const _k = {
+  w: ["NDE5Nj", "Y5NTcxOTU="],
+  m: ["bW9jLmxpYW", "1nQDk1N2ht", "eW5vaHRuYWQ="],
 };
+const reveal = (parts) => [...atob(parts.join(""))].reverse().join("");
 
 /* =========================================================
    TARIFARIO (USD)
@@ -99,52 +100,52 @@ const PRICES = {
 
 /* ========================================================= */
 
-const $ = (s) => document.querySelector(s);
+const $ = (s, el = document) => el.querySelector(s);
 
-function waUrl(text) {
-  const base = `https://wa.me/${CONFIG.whatsapp}`;
-  return text ? `${base}?text=${encodeURIComponent(text)}` : base;
+function openWhatsApp(text) {
+  const url = `https://wa.me/${reveal(_k.w)}?text=${encodeURIComponent(text)}`;
+  window.open(url, "_blank", "noopener");
 }
 
-function mailUrl(subject, body) {
-  return `mailto:${CONFIG.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-}
-
-// Contact links (hide those not configured)
-function setupContactLinks() {
-  const greeting = "Hola DANTHONY MH, quiero cotizar un proyecto.";
-  const wa = [$("#waLink"), $("#waFloat")];
-  wa.forEach((a) => {
-    if (CONFIG.whatsapp) a.href = waUrl(greeting);
-    else a.hidden = true;
+/* ----- Tema claro / oscuro ----- */
+function setupTheme() {
+  const btn = $("#themeToggle");
+  const root = document.documentElement;
+  const isDark = () =>
+    root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  const sync = () => btn.setAttribute("aria-label", isDark() ? "Cambiar a modo claro" : "Cambiar a modo oscuro");
+  btn.addEventListener("click", () => {
+    const next = isDark() ? "light" : "dark";
+    root.dataset.theme = next;
+    try { localStorage.setItem("theme", next); } catch (e) { /* sin almacenamiento */ }
+    sync();
   });
-  if (CONFIG.email) $("#mailLink").href = mailUrl("Cotización de proyecto", greeting);
-  else $("#mailLink").parentElement.hidden = true;
-  if (CONFIG.linkedin) $("#linkedinLink").href = CONFIG.linkedin;
-  else $("#linkedinLink").parentElement.hidden = true;
-  if (!CONFIG.whatsapp) $('#contactForm button[type="submit"]').hidden = true;
-  if (!CONFIG.email) $("#sendMail").hidden = true;
+  sync();
 }
 
-// Pricing tabs
+/* ----- Precios ----- */
 function setupPricing() {
   const tabs = $("#priceTabs");
   const panel = $("#pricePanel");
-  const names = Object.keys(PRICES);
 
   function render(name) {
-    tabs.querySelectorAll(".tab").forEach((t) => t.setAttribute("aria-selected", t.dataset.name === name));
-    panel.innerHTML = PRICES[name]
-      .map(([service, price]) => {
-        const ask = CONFIG.whatsapp
-          ? `<a href="${waUrl(`Hola, me interesa: ${service} (${name}). ¿Podemos conversar?`)}" target="_blank" rel="noopener">Consultar</a>`
-          : "";
-        return `<div class="price-row"><span>${service}${ask}</span><span>${price}</span></div>`;
-      })
-      .join("");
+    tabs.querySelectorAll(".tab").forEach((t) => t.setAttribute("aria-selected", String(t.dataset.name === name)));
+    panel.innerHTML = "";
+    PRICES[name].forEach(([service, price], i) => {
+      const row = document.createElement("div");
+      row.className = "price-row";
+      row.style.animationDelay = `${i * 30}ms`;
+      row.innerHTML = `<div><span class="price-row__name"></span><button type="button" class="price-row__ask">Consultar por WhatsApp →</button></div><span class="price-row__price"></span>`;
+      $(".price-row__name", row).textContent = service;
+      $(".price-row__price", row).textContent = price;
+      $(".price-row__ask", row).addEventListener("click", () =>
+        openWhatsApp(`Hola DANTHONY MH, me interesa: ${service} (${name}, ${price}). ¿Podemos conversar?`)
+      );
+      panel.appendChild(row);
+    });
   }
 
-  names.forEach((name, i) => {
+  Object.keys(PRICES).forEach((name, i) => {
     const b = document.createElement("button");
     b.className = "tab";
     b.type = "button";
@@ -157,83 +158,135 @@ function setupPricing() {
   });
 }
 
-// Contact form → WhatsApp / email
+/* ----- Formulario: WhatsApp o correo ----- */
 function setupForm() {
   const form = $("#contactForm");
-  const err = $("#formError");
+  const msg = $("#formMsg");
+  let via = "wa";
 
-  function buildMessage() {
-    const d = new FormData(form);
-    const nombre = d.get("nombre").trim();
-    const servicio = d.get("servicio");
-    const mensaje = d.get("mensaje").trim();
-    if (!nombre || !servicio || !mensaje) {
-      err.textContent = "Completa tu nombre, el servicio y la descripción del proyecto.";
-      return null;
+  form.querySelectorAll('button[type="submit"]').forEach((b) =>
+    b.addEventListener("click", () => { via = b.dataset.via; })
+  );
+
+  const show = (text, type) => { msg.textContent = text; msg.className = `form__msg ${type || ""}`; };
+
+  function validate(d) {
+    form.querySelectorAll(".invalid").forEach((el) => el.classList.remove("invalid"));
+    const bad = [];
+    if (!d.nombre) bad.push("nombre");
+    if (!d.servicio) bad.push("servicio");
+    if (!d.mensaje) bad.push("mensaje");
+    if (via === "mail" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) bad.push("email");
+    bad.forEach((n) => form.elements[n].classList.add("invalid"));
+    if (bad.length) {
+      show(bad.includes("email") && bad.length === 1
+        ? "Escribe un correo válido para que pueda responderte."
+        : "Completa los campos marcados.", "err");
+      if (form.elements[bad[0]]) form.elements[bad[0]].focus();
+      return false;
     }
-    err.textContent = "";
-    const empresa = d.get("empresa").trim();
-    return [
-      `Hola DANTHONY MH, soy ${nombre}${empresa ? ` de ${empresa}` : ""}.`,
-      `Servicio: ${servicio}`,
-      `Presupuesto: ${d.get("presupuesto")}`,
-      "",
-      mensaje,
-    ].join("\n");
+    return true;
   }
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const msg = buildMessage();
-    if (msg) window.open(waUrl(msg), "_blank", "noopener");
-  });
+    const f = new FormData(form);
+    if (f.get("_honey")) return; // bot
+    const d = {
+      nombre: f.get("nombre").trim(),
+      empresa: f.get("empresa").trim(),
+      email: f.get("email").trim(),
+      servicio: f.get("servicio"),
+      presupuesto: f.get("presupuesto"),
+      mensaje: f.get("mensaje").trim(),
+    };
+    if (!validate(d)) return;
 
-  $("#sendMail").addEventListener("click", () => {
-    const msg = buildMessage();
-    if (msg) window.location.href = mailUrl("Cotización de proyecto", msg);
+    if (via === "wa") {
+      const text = [
+        `Hola DANTHONY MH, soy ${d.nombre}${d.empresa ? ` de ${d.empresa}` : ""}.`,
+        `Servicio: ${d.servicio}`,
+        `Presupuesto: ${d.presupuesto}`,
+        d.email ? `Correo: ${d.email}` : "",
+        "",
+        d.mensaje,
+      ].filter((l, i, a) => l !== "" || a[i - 1] !== "").join("\n");
+      openWhatsApp(text);
+      show("Abriendo WhatsApp… solo presiona enviar.", "ok");
+      return;
+    }
+
+    // Envío por correo mediante FormSubmit (gratis, sin servidor propio)
+    const buttons = form.querySelectorAll("button");
+    buttons.forEach((b) => (b.disabled = true));
+    show("Enviando…");
+    try {
+      const res = await fetch(`https://formsubmit.co/ajax/${reveal(_k.m)}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: `Nuevo cliente web: ${d.servicio} — ${d.nombre}`,
+          _template: "table",
+          _replyto: d.email,
+          _captcha: "false",
+          Nombre: d.nombre,
+          Empresa: d.empresa || "-",
+          Correo: d.email,
+          Servicio: d.servicio,
+          Presupuesto: d.presupuesto,
+          Mensaje: d.mensaje,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || String(data.success) === "false") throw new Error(data.message || res.status);
+      form.reset();
+      show("¡Mensaje enviado! Te responderé a tu correo muy pronto.", "ok");
+    } catch (err) {
+      show("No se pudo enviar por correo. Intenta por WhatsApp, por favor.", "err");
+    } finally {
+      buttons.forEach((b) => (b.disabled = false));
+    }
   });
 }
 
-// Mobile nav
+/* ----- Navegación ----- */
 function setupNav() {
   const toggle = $("#navToggle");
   const menu = $("#navMenu");
-  const close = () => {
-    menu.classList.remove("open");
-    toggle.setAttribute("aria-expanded", "false");
-  };
+  const close = () => { menu.classList.remove("open"); toggle.setAttribute("aria-expanded", "false"); };
   toggle.addEventListener("click", () => {
     const open = menu.classList.toggle("open");
     toggle.setAttribute("aria-expanded", String(open));
   });
   menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", close));
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+
   const nav = $("#nav");
-  const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 10);
+  const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 8);
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
+
+  $("#waFloat").addEventListener("click", () =>
+    openWhatsApp("Hola DANTHONY MH, quiero cotizar un proyecto.")
+  );
 }
 
-// Reveal on scroll
+/* ----- Animación al hacer scroll ----- */
 function setupReveal() {
-  const els = document.querySelectorAll(".section h2, .card, .project, .stack__row, .steps li, .plan, .terms, .checks li");
   if (!("IntersectionObserver" in window)) return;
-  const io = new IntersectionObserver(
-    (entries) => entries.forEach((en) => {
-      if (en.isIntersecting) {
-        en.target.classList.add("visible");
-        io.unobserve(en.target);
-      }
-    }),
-    { threshold: 0.12 }
+  const els = document.querySelectorAll(
+    ".section__head, .about > *, .card, .project, .stack__row, .timeline li, .plan, .pay, details, .contact__grid > *"
   );
-  els.forEach((el) => {
-    el.classList.add("reveal");
-    io.observe(el);
-  });
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (en.isIntersecting) { en.target.classList.add("visible"); io.unobserve(en.target); }
+    });
+  }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+  els.forEach((el) => { el.classList.add("reveal"); io.observe(el); });
 }
 
 $("#year").textContent = new Date().getFullYear();
-setupContactLinks();
+setupTheme();
 setupPricing();
 setupForm();
 setupNav();

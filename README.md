@@ -5,10 +5,7 @@ Sitio estático (HTML + CSS + JS, sin dependencias). Se publica gratis.
 ## 1. Antes de publicar (obligatorio)
 
 1. **`main.js`** → al inicio, completa `CONFIG`:
-   - `whatsapp`: número con código de país, solo dígitos (Bolivia `591…`).
-   - `email`: correo profesional.
-   - `linkedin`: URL del perfil (opcional).
-   Si un dato queda vacío, su botón se oculta automáticamente.
+   - El WhatsApp y el correo ya están configurados (codificados) en `_k`.
 2. Cuando tengas la URL final, reemplaza `https://TU-DOMINIO.com` en
    `index.html`, `robots.txt` y `sitemap.xml`.
 

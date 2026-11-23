@@ -7,7 +7,8 @@
   <meta name="description" content="Ingeniero de Sistemas freelance en Bolivia. Desarrollo de páginas web, sistemas empresariales, aplicaciones móviles, inteligencia artificial y administración de servidores. Precios en USD, atención remota e internacional.">
   <meta name="keywords" content="desarrollador web Bolivia, programador freelance, sistemas empresariales, aplicaciones móviles, páginas web, VPS, Linux, inteligencia artificial, DANTHONY MH">
   <meta name="author" content="DANTHONY MH">
-  <meta name="theme-color" content="#0b1020">
+  <meta name="theme-color" content="#f7f8fc" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0a0d18" media="(prefers-color-scheme: dark)">
   <meta name="google-site-verification" content="GCqCyv0N_abeKTmJ48azD3uCpco7LBanbZ_gYirD7RY" />
   <!-- Si compras un dominio propio, reemplaza esta URL aqui, en robots.txt y sitemap.xml -->
   <link rel="canonical" href="https://dan7h0ny.github.io/danthony-mh-web/">
@@ -20,7 +21,11 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script>
+    /* Aplica el tema guardado antes de pintar, para evitar parpadeo */
+    try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
   <link rel="stylesheet" href="styles.css">
   <script type="application/ld+json">
   {
@@ -37,120 +42,170 @@
   </script>
 </head>
 <body>
-  <a class="skip" href="#inicio">Saltar al contenido</a>
+  <!-- Iconos (sprite SVG) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-web" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol>
+      <symbol id="i-building" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M10 21v-3h4v3"/></symbol>
+      <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></symbol>
+      <symbol id="i-desktop" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol>
+      <symbol id="i-ai" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3.5"/></symbol>
+      <symbol id="i-server" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></symbol>
+      <symbol id="i-design" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.5-.8 1.5-1.5 0-.9-.7-1.3-.7-2.2 0-1 .8-1.8 1.8-1.8H17a4 4 0 0 0 4-4C21 6.6 17 3 12 3Z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="14.5" cy="7" r="1"/></symbol>
+      <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></symbol>
+      <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></symbol>
+      <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3Z"/></symbol>
+    </defs>
+  </svg>
+
+  <a class="skip" href="#main">Saltar al contenido</a>
 
   <header class="nav" id="nav">
     <div class="container nav__inner">
       <a href="#inicio" class="brand" aria-label="DANTHONY MH, inicio">
         <span class="brand__mark">DM</span>
-        <span class="brand__name">DANTHONY <b>MH</b></span>
+        <span class="brand__name">DANTHONY<span>MH</span></span>
       </a>
-      <button class="nav__toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navMenu">
-        <span></span><span></span><span></span>
-      </button>
-      <nav class="nav__menu" id="navMenu">
+      <nav class="nav__menu" id="navMenu" aria-label="Principal">
         <a href="#servicios">Servicios</a>
         <a href="#proyectos">Proyectos</a>
-        <a href="#tecnologias">Tecnologías</a>
         <a href="#precios">Precios</a>
         <a href="#proceso">Proceso</a>
-        <a href="#contacto" class="btn btn--sm">Cotizar proyecto</a>
+        <a href="#faq">Preguntas</a>
       </nav>
+      <div class="nav__actions">
+        <button class="icon-btn" id="themeToggle" type="button" aria-label="Cambiar a modo oscuro">
+          <svg class="ico ico--sun"><use href="#i-sun"/></svg>
+          <svg class="ico ico--moon"><use href="#i-moon"/></svg>
+        </button>
+        <a href="#contacto" class="btn btn--sm nav__cta">Cotizar</a>
+        <button class="icon-btn nav__toggle" id="navToggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="navMenu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
   </header>
 
-  <main id="inicio">
+  <main id="main">
     <!-- HERO -->
-    <section class="hero">
-      <div class="hero__glow" aria-hidden="true"></div>
-      <div class="container hero__inner">
-        <p class="eyebrow">Ingeniero de Sistemas · Freelance · Bolivia e internacional</p>
-        <h1>De la idea a la <span class="grad">solución tecnológica.</span></h1>
-        <p class="lead">Desarrollo páginas web, sistemas empresariales, aplicaciones móviles y plataformas digitales a la medida de tu negocio. También despliego y administro tus servidores.</p>
-        <div class="hero__cta">
-          <a href="#contacto" class="btn">Solicitar cotización gratis</a>
-          <a href="#precios" class="btn btn--ghost">Ver precios</a>
+    <section class="hero" id="inicio">
+      <div class="blob blob--1" aria-hidden="true"></div>
+      <div class="blob blob--2" aria-hidden="true"></div>
+      <div class="container hero__grid">
+        <div class="hero__text">
+          <span class="badge"><span class="dot"></span> Disponible para nuevos proyectos</span>
+          <h1>De la idea a la <span class="grad">solución tecnológica</span>.</h1>
+          <p class="lead">Soy Ingeniero de Sistemas. Desarrollo páginas web, sistemas empresariales, aplicaciones móviles y soluciones con inteligencia artificial, y me encargo de desplegarlas y mantenerlas en tus servidores.</p>
+          <div class="hero__cta">
+            <a href="#contacto" class="btn">Solicitar cotización <svg class="ico"><use href="#i-arrow"/></svg></a>
+            <a href="#precios" class="btn btn--ghost">Ver precios</a>
+          </div>
+          <ul class="hero__facts">
+            <li><b>9</b><span>áreas de servicio</span></li>
+            <li><b>30 días</b><span>de garantía técnica</span></li>
+            <li><b>USD</b><span>precios claros</span></li>
+          </ul>
         </div>
-        <ul class="hero__pills" aria-label="Ventajas">
-          <li>Desarrollo personalizado</li>
-          <li>Adaptado a tu presupuesto</li>
-          <li>Atención directa</li>
-          <li>Garantía de 30 días</li>
-        </ul>
+        <div class="hero__visual" aria-hidden="true">
+          <div class="window">
+            <div class="window__bar"><i></i><i></i><i></i><span>proyecto.js</span></div>
+<pre class="code"><span class="k">const</span> <span class="v">cliente</span> = { <span class="p">idea</span>: <span class="s">"Mi negocio"</span> };
+
+<span class="k">const</span> <span class="v">solucion</span> = <span class="f">desarrollar</span>({
+  <span class="p">web</span>: <span class="b">true</span>,
+  <span class="p">sistema</span>: <span class="s">"a medida"</span>,
+  <span class="p">app</span>: [<span class="s">"Android"</span>, <span class="s">"Web"</span>],
+  <span class="p">servidor</span>: <span class="s">"Linux + SSL"</span>,
+});
+
+<span class="f">desplegar</span>(<span class="v">solucion</span>); <span class="c">// ✓ en producción</span></pre>
+          </div>
+          <div class="float-card float-card--a"><svg class="ico"><use href="#i-shield"/></svg><div><b>Garantía</b><span>30 días incluidos</span></div></div>
+          <div class="float-card float-card--b"><svg class="ico"><use href="#i-bolt"/></svg><div><b>Atención directa</b><span>Sin intermediarios</span></div></div>
+        </div>
       </div>
     </section>
 
-    <!-- SOBRE MÍ -->
+    <!-- VALOR -->
     <section class="section" id="sobre-mi">
-      <div class="container split">
+      <div class="container about">
         <div>
           <p class="eyebrow">Quién soy</p>
           <h2>Tecnología pensada para tu negocio</h2>
-          <p>DANTHONY MH es una marca personal orientada al desarrollo de software, implementación de soluciones digitales y administración de infraestructura tecnológica.</p>
-          <p>Como Ingeniero de Sistemas, trabajo con empresas, emprendimientos, instituciones educativas y profesionales que buscan digitalizar procesos, desarrollar plataformas y optimizar sus operaciones. Me encargo del análisis, diseño, desarrollo, implementación y mantenimiento.</p>
+          <p class="muted">DANTHONY MH es mi marca personal de desarrollo de software, soluciones digitales e infraestructura tecnológica. Trabajo con empresas, emprendimientos, instituciones educativas y profesionales que quieren digitalizar procesos, crear plataformas y optimizar sus operaciones.</p>
+          <p class="muted">Me encargo del ciclo completo: análisis, diseño, desarrollo, implementación y mantenimiento.</p>
         </div>
-        <ul class="checks">
-          <li>Desarrollo 100% personalizado</li>
-          <li>Soluciones adaptadas al presupuesto</li>
-          <li>Tecnologías modernas</li>
-          <li>Atención directa, sin intermediarios</li>
-          <li>Precios competitivos en USD</li>
-          <li>Trabajo independiente y colaborativo</li>
-          <li>Implementación y acompañamiento técnico</li>
+        <ul class="values">
+          <li><svg class="ico"><use href="#i-check"/></svg>Desarrollo 100% personalizado</li>
+          <li><svg class="ico"><use href="#i-check"/></svg>Adaptado a tu presupuesto</li>
+          <li><svg class="ico"><use href="#i-check"/></svg>Tecnologías modernas</li>
+          <li><svg class="ico"><use href="#i-check"/></svg>Atención directa</li>
+          <li><svg class="ico"><use href="#i-check"/></svg>Precios competitivos</li>
+          <li><svg class="ico"><use href="#i-check"/></svg>Trabajo independiente y colaborativo</li>
+          <li><svg class="ico"><use href="#i-check"/></svg>Implementación y acompañamiento técnico</li>
         </ul>
       </div>
     </section>
 
     <!-- SERVICIOS -->
-    <section class="section section--alt" id="servicios">
+    <section class="section section--tint" id="servicios">
       <div class="container">
-        <p class="eyebrow">Servicios</p>
-        <h2>¿Qué puedo construir para ti?</h2>
-        <div class="grid cards">
-          <article class="card">
-            <div class="card__icon" aria-hidden="true">🌐</div>
+        <div class="section__head">
+          <p class="eyebrow">Servicios</p>
+          <h2>¿Qué puedo construir para ti?</h2>
+          <p class="muted">Desde una landing page hasta un ERP con su servidor configurado.</p>
+        </div>
+        <div class="bento">
+          <article class="card card--wide">
+            <span class="card__icon c1"><svg class="ico"><use href="#i-web"/></svg></span>
             <h3>Desarrollo web</h3>
-            <p>Landing pages, sitios personales y empresariales, portales institucionales, catálogos digitales, tiendas virtuales y paneles administrativos responsivos.</p>
+            <p>Landing pages, sitios personales y empresariales, portales institucionales, catálogos digitales, tiendas virtuales, plataformas y paneles administrativos responsivos.</p>
           </article>
           <article class="card">
-            <div class="card__icon" aria-hidden="true">🏢</div>
+            <span class="card__icon c2"><svg class="ico"><use href="#i-building"/></svg></span>
             <h3>Sistemas empresariales</h3>
-            <p>Inventarios, ventas y facturación, gestión administrativa y académica, laboratorios, licencias, CRM, ERP, reservas y reportes.</p>
+            <p>Inventarios, ventas y facturación, gestión académica, laboratorios, licencias, CRM, ERP, reservas y reportes.</p>
           </article>
           <article class="card">
-            <div class="card__icon" aria-hidden="true">📱</div>
+            <span class="card__icon c3"><svg class="ico"><use href="#i-phone"/></svg></span>
             <h3>Aplicaciones móviles</h3>
-            <p>Apps Android y multiplataforma: comerciales, educativas y administrativas, con autenticación, base de datos y conexión a tu plataforma web.</p>
+            <p>Apps Android y multiplataforma con autenticación, base de datos y conexión a tu plataforma web.</p>
           </article>
           <article class="card">
-            <div class="card__icon" aria-hidden="true">💻</div>
+            <span class="card__icon c4"><svg class="ico"><use href="#i-desktop"/></svg></span>
             <h3>Aplicaciones de escritorio</h3>
-            <p>Software administrativo, sistemas de registros e inventario, aplicaciones empresariales y herramientas de procesamiento de información.</p>
+            <p>Software administrativo, registros, inventario y herramientas para procesar información.</p>
           </article>
-          <article class="card">
-            <div class="card__icon" aria-hidden="true">🤖</div>
+          <article class="card card--wide">
+            <span class="card__icon c5"><svg class="ico"><use href="#i-ai"/></svg></span>
             <h3>Inteligencia artificial y datos</h3>
             <p>Predicción de ventas, modelos predictivos, chatbots, integración de servicios de IA, dashboards analíticos y automatización inteligente.</p>
           </article>
           <article class="card">
-            <div class="card__icon" aria-hidden="true">🖥️</div>
-            <h3>Servidores e infraestructura</h3>
-            <p>Servidores Linux, VPS, hosting, dominios y DNS, SSL, Docker, despliegue a producción, respaldos, monitoreo, migraciones y cloud (AWS, Google Cloud).</p>
-          </article>
-          <article class="card">
-            <div class="card__icon" aria-hidden="true">🎨</div>
+            <span class="card__icon c7"><svg class="ico"><use href="#i-design"/></svg></span>
             <h3>Diseño UI/UX</h3>
-            <p>Diseño de interfaces web y móviles, prototipos, paneles administrativos y rediseño de plataformas con foco en la experiencia del usuario.</p>
+            <p>Interfaces web y móviles, prototipos, paneles y rediseño de plataformas.</p>
+          </article>
+          <article class="card card--wide">
+            <span class="card__icon c6"><svg class="ico"><use href="#i-server"/></svg></span>
+            <h3>Servidores e infraestructura</h3>
+            <p>Servidores Linux, VPS, hosting, dominios y DNS, certificados SSL, Docker, despliegue a producción, respaldos automáticos, monitoreo, migraciones y cloud (AWS y Google Cloud).</p>
           </article>
           <article class="card">
-            <div class="card__icon" aria-hidden="true">🗄️</div>
+            <span class="card__icon c8"><svg class="ico"><use href="#i-db"/></svg></span>
             <h3>Bases de datos y APIs</h3>
-            <p>Modelado y administración de bases de datos, APIs REST, integración de servicios, migración de datos y optimización de consultas.</p>
+            <p>Modelado, APIs REST, integración de servicios, migración y optimización de consultas.</p>
           </article>
           <article class="card">
-            <div class="card__icon" aria-hidden="true">⚙️</div>
+            <span class="card__icon c9"><svg class="ico"><use href="#i-bolt"/></svg></span>
             <h3>Automatización</h3>
-            <p>Reportes automáticos, procesamiento de datos, integración entre plataformas, generación de documentos y sincronización de información.</p>
+            <p>Reportes automáticos, integración entre plataformas, documentos y sincronización de datos.</p>
           </article>
         </div>
       </div>
@@ -159,34 +214,47 @@
     <!-- PROYECTOS -->
     <section class="section" id="proyectos">
       <div class="container">
-        <p class="eyebrow">Proyectos destacados</p>
-        <h2>Casos de estudio</h2>
-        <div class="grid projects">
+        <div class="section__head">
+          <p class="eyebrow">Proyectos destacados</p>
+          <h2>Casos de estudio</h2>
+        </div>
+        <div class="projects">
           <article class="project">
-            <span class="tag">Sistema empresarial</span>
-            <h3>Sistema de gestión de licencias</h3>
-            <p>Sistema orientado a organizar, registrar y administrar información relacionada con licencias.</p>
+            <div class="project__art art--1" aria-hidden="true"><svg class="ico"><use href="#i-shield"/></svg></div>
+            <div class="project__body">
+              <span class="tag">Sistema empresarial</span>
+              <h3>Sistema de gestión de licencias</h3>
+              <p>Sistema orientado a organizar, registrar y administrar información relacionada con licencias.</p>
+            </div>
           </article>
           <article class="project">
-            <span class="tag">Sistema empresarial</span>
-            <h3>Sistema de gestión de laboratorio</h3>
-            <p>Solución informática para centralizar información y apoyar los procesos administrativos y operativos de un laboratorio.</p>
+            <div class="project__art art--2" aria-hidden="true"><svg class="ico"><use href="#i-db"/></svg></div>
+            <div class="project__body">
+              <span class="tag">Sistema empresarial</span>
+              <h3>Sistema de gestión de laboratorio</h3>
+              <p>Solución informática para centralizar información y apoyar los procesos administrativos y operativos de un laboratorio.</p>
+            </div>
           </article>
           <article class="project">
-            <span class="tag tag--ai">Inteligencia artificial</span>
-            <h3>Predicción de ventas para una farmacia</h3>
-            <p>Análisis de datos comerciales y predicción de ventas para apoyar la planificación y la toma de decisiones.</p>
+            <div class="project__art art--3" aria-hidden="true"><svg class="ico"><use href="#i-ai"/></svg></div>
+            <div class="project__body">
+              <span class="tag tag--ai">Inteligencia artificial</span>
+              <h3>Predicción de ventas para una farmacia</h3>
+              <p>Análisis de datos comerciales y predicción de ventas para apoyar la planificación y la toma de decisiones.</p>
+            </div>
           </article>
         </div>
       </div>
     </section>
 
     <!-- TECNOLOGÍAS -->
-    <section class="section section--alt" id="tecnologias">
+    <section class="section section--tint" id="tecnologias">
       <div class="container">
-        <p class="eyebrow">Tecnologías</p>
-        <h2>Herramientas con las que trabajo</h2>
-        <div class="grid stack">
+        <div class="section__head">
+          <p class="eyebrow">Tecnologías</p>
+          <h2>Herramientas con las que trabajo</h2>
+        </div>
+        <div class="stack">
           <div class="stack__row"><h3>Frontend</h3><p class="chips"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>React</span><span>Angular</span><span>Vue</span></p></div>
           <div class="stack__row"><h3>Backend</h3><p class="chips"><span>PHP</span><span>Laravel</span><span>Node.js</span><span>Python</span><span>Java</span><span>C#</span></p></div>
           <div class="stack__row"><h3>Bases de datos</h3><p class="chips"><span>MySQL</span><span>PostgreSQL</span><span>SQL Server</span><span>MongoDB</span></p></div>
@@ -202,25 +270,29 @@
     <!-- PRECIOS -->
     <section class="section" id="precios">
       <div class="container">
-        <p class="eyebrow">Tarifario</p>
-        <h2>Precios referenciales en USD</h2>
-        <p class="muted">Elige una categoría. Los proyectos con múltiples módulos, integraciones o alta disponibilidad requieren cotización personalizada.</p>
-        <div class="tabs" role="tablist" id="priceTabs"></div>
+        <div class="section__head">
+          <p class="eyebrow">Tarifario</p>
+          <h2>Precios referenciales en USD</h2>
+          <p class="muted">Elige una categoría. Los proyectos con varios módulos, integraciones o alta disponibilidad se cotizan a medida.</p>
+        </div>
+        <div class="tabs" role="tablist" aria-label="Categorías de precios" id="priceTabs"></div>
         <div class="price-panel" id="pricePanel" role="tabpanel" aria-live="polite"></div>
         <div class="plans">
-          <div class="plan"><h3>Desarrollo básico</h3><p>Soluciones pequeñas para emprendedores y profesionales.</p></div>
-          <div class="plan plan--hl"><h3>Desarrollo profesional</h3><p>Sistemas personalizados para negocios e instituciones.</p></div>
-          <div class="plan"><h3>Soluciones empresariales</h3><p>Plataformas integrales con infraestructura, automatización, integraciones y soporte.</p></div>
+          <div class="plan"><span class="plan__label">Básico</span><h3>Desarrollo básico</h3><p>Soluciones pequeñas para emprendedores y profesionales.</p></div>
+          <div class="plan plan--hl"><span class="plan__label">Más solicitado</span><h3>Desarrollo profesional</h3><p>Sistemas personalizados para negocios e instituciones.</p></div>
+          <div class="plan"><span class="plan__label">Empresas</span><h3>Soluciones empresariales</h3><p>Plataformas integrales con infraestructura, automatización, integraciones y soporte.</p></div>
         </div>
       </div>
     </section>
 
     <!-- PROCESO -->
-    <section class="section section--alt" id="proceso">
+    <section class="section section--tint" id="proceso">
       <div class="container">
-        <p class="eyebrow">Metodología</p>
-        <h2>Cómo trabajamos juntos</h2>
-        <ol class="steps">
+        <div class="section__head">
+          <p class="eyebrow">Metodología</p>
+          <h2>Cómo trabajamos juntos</h2>
+        </div>
+        <ol class="timeline">
           <li><b>Consulta inicial</b><span>Conversamos sobre tu idea o necesidad.</span></li>
           <li><b>Análisis de requerimientos</b><span>Defino qué debe hacer la solución.</span></li>
           <li><b>Propuesta y cotización</b><span>Alcance, precio, cronograma y entregables por escrito.</span></li>
@@ -228,85 +300,115 @@
           <li><b>Desarrollo</b><span>Construcción con avances que puedes revisar.</span></li>
           <li><b>Pruebas y validación</b><span>Verificamos que todo funcione como se acordó.</span></li>
           <li><b>Implementación</b><span>Puesta en producción en tu servidor o hosting.</span></li>
-          <li><b>Entrega</b><span>Código, documentación y capacitación según acuerdo.</span></li>
+          <li><b>Entrega</b><span>Código, documentación y capacitación según el acuerdo.</span></li>
           <li><b>Mantenimiento</b><span>Soporte mensual opcional.</span></li>
         </ol>
 
-        <div class="terms">
-          <h3>Condiciones de contratación</h3>
-          <ul>
-            <li><b>50%</b> de anticipo para iniciar.</li>
-            <li><b>30%</b> durante el desarrollo (proyectos medianos y grandes).</li>
-            <li><b>20%</b> antes de la entrega final.</li>
-            <li>Dos rondas de ajustes menores incluidas.</li>
-            <li>Garantía técnica de <b>30 días</b> para errores del desarrollo dentro del alcance acordado.</li>
-            <li>Funcionalidades adicionales se cotizan por separado.</li>
-            <li>Hosting, dominios, licencias y servicios de terceros se cobran aparte.</li>
-            <li>Código fuente, documentación y derechos de uso se entregan conforme al acuerdo y al cumplimiento de los pagos.</li>
-          </ul>
+        <div class="pay">
+          <div class="pay__bar" aria-hidden="true">
+            <span style="flex:50">50%</span><span style="flex:30">30%</span><span style="flex:20">20%</span>
+          </div>
+          <div class="pay__legend">
+            <p><b>50%</b> anticipo para iniciar</p>
+            <p><b>30%</b> durante el desarrollo <small>(proyectos medianos y grandes)</small></p>
+            <p><b>20%</b> antes de la entrega final</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- PARA QUIÉN -->
-    <section class="section" id="clientes">
-      <div class="container">
-        <p class="eyebrow">Para quién trabajo</p>
-        <h2>Soluciones para todo tipo de cliente</h2>
-        <p class="chips chips--lg">
-          <span>Empresas y negocios</span><span>Emprendedores</span><span>Instituciones educativas</span><span>Laboratorios</span><span>Farmacias</span><span>Profesionales independientes</span><span>Organizaciones</span><span>Clientes internacionales</span>
-        </p>
-        <p class="muted center">Trabajo de forma remota y presencial cuando es posible. También acepto colaboraciones con otros desarrolladores y profesionales tecnológicos.</p>
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="container faq">
+        <div class="section__head">
+          <p class="eyebrow">Preguntas frecuentes</p>
+          <h2>Condiciones claras desde el inicio</h2>
+          <p class="muted">Cada proyecto tiene alcance, presupuesto, cronograma y entregables definidos antes de empezar.</p>
+        </div>
+        <div class="faq__list">
+          <details>
+            <summary>¿Cómo se realizan los pagos?</summary>
+            <p>50% de anticipo para iniciar, 30% durante el desarrollo en proyectos medianos y grandes, y 20% antes de la entrega final. Los precios se manejan en dólares (USD).</p>
+          </details>
+          <details>
+            <summary>¿Puedo pedir cambios?</summary>
+            <p>Sí. Se incluyen dos rondas de ajustes menores. Las funcionalidades adicionales que no estaban en el alcance acordado se cotizan por separado.</p>
+          </details>
+          <details>
+            <summary>¿Qué garantía tengo?</summary>
+            <p>Garantía técnica de 30 días para errores atribuibles al desarrollo y dentro del alcance acordado.</p>
+          </details>
+          <details>
+            <summary>¿El precio incluye hosting y dominio?</summary>
+            <p>No. Hosting, dominios, licencias y servicios de terceros se cobran por separado. Puedo ayudarte a contratarlos y configurarlos.</p>
+          </details>
+          <details>
+            <summary>¿Me entregas el código fuente?</summary>
+            <p>Sí. El código fuente, la documentación y los derechos de uso se entregan conforme al acuerdo y al cumplimiento de los pagos.</p>
+          </details>
+          <details>
+            <summary>¿Trabajas con clientes fuera de Bolivia?</summary>
+            <p>Sí. Trabajo de forma remota con clientes nacionales e internacionales, y de forma presencial cuando es posible. También acepto colaboraciones con otros desarrolladores.</p>
+          </details>
+        </div>
       </div>
     </section>
 
     <!-- CONTACTO -->
-    <section class="section section--cta" id="contacto">
-      <div class="container split">
-        <div>
+    <section class="section contact" id="contacto">
+      <div class="container contact__grid">
+        <div class="contact__intro">
           <p class="eyebrow">Contacto</p>
           <h2>Cuéntame tu proyecto</h2>
-          <p>Completa el formulario y se abrirá WhatsApp con tu mensaje listo para enviar. Respondo con una propuesta y cotización sin compromiso.</p>
-          <ul class="contact-list">
-            <li><a id="waLink" href="#" target="_blank" rel="noopener">💬 WhatsApp</a></li>
-            <li><a id="mailLink" href="#">✉️ Correo</a></li>
-            <li><a id="linkedinLink" href="#" target="_blank" rel="noopener">💼 LinkedIn</a></li>
+          <p class="muted">Completa el formulario y elige cómo prefieres enviarlo. Te respondo con una propuesta y cotización sin compromiso.</p>
+          <ul class="contact__ways">
+            <li><span class="cw cw--wa"><svg class="ico"><use href="#i-wa"/></svg></span><div><b>WhatsApp</b><span>Se abre con tu mensaje listo para enviar.</span></div></li>
+            <li><span class="cw cw--mail"><svg class="ico"><use href="#i-mail"/></svg></span><div><b>Correo</b><span>Me llega directo; te respondo a tu correo.</span></div></li>
           </ul>
+          <p class="for">Empresas · Emprendedores · Instituciones educativas · Laboratorios · Farmacias · Profesionales · Organizaciones · Clientes internacionales</p>
         </div>
+
         <form class="form" id="contactForm" novalidate>
-          <label>Nombre<input name="nombre" required autocomplete="name" placeholder="Tu nombre"></label>
-          <label>Empresa o negocio (opcional)<input name="empresa" autocomplete="organization" placeholder="Nombre de tu negocio"></label>
-          <label>Servicio de interés
-            <select name="servicio" required>
-              <option value="">Selecciona una opción</option>
-              <option>Página web</option>
-              <option>Tienda virtual</option>
-              <option>Sistema empresarial</option>
-              <option>Aplicación móvil</option>
-              <option>Aplicación de escritorio</option>
-              <option>Inteligencia artificial / datos</option>
-              <option>Servidores / infraestructura</option>
-              <option>Diseño UI/UX</option>
-              <option>Base de datos / API</option>
-              <option>Automatización</option>
-              <option>Mantenimiento / soporte</option>
-              <option>Otro</option>
-            </select>
-          </label>
-          <label>Presupuesto aproximado (USD)
-            <select name="presupuesto">
-              <option>Aún no lo sé</option>
-              <option>Menos de $200</option>
-              <option>$200 – $500</option>
-              <option>$500 – $1,000</option>
-              <option>Más de $1,000</option>
-            </select>
-          </label>
-          <label>Describe tu proyecto<textarea name="mensaje" rows="4" required placeholder="¿Qué necesitas? ¿Para cuándo?"></textarea></label>
-          <p class="form__error" id="formError" role="alert"></p>
+          <div class="form__row">
+            <label>Nombre *<input name="nombre" required autocomplete="name" placeholder="Tu nombre"></label>
+            <label>Empresa <small>(opcional)</small><input name="empresa" autocomplete="organization" placeholder="Tu negocio"></label>
+          </div>
+          <label>Tu correo <small>(necesario si envías por correo)</small><input name="email" type="email" autocomplete="email" placeholder="tucorreo@ejemplo.com"></label>
+          <div class="form__row">
+            <label>Servicio *
+              <select name="servicio" required>
+                <option value="">Selecciona</option>
+                <option>Página web</option>
+                <option>Tienda virtual</option>
+                <option>Sistema empresarial</option>
+                <option>Aplicación móvil</option>
+                <option>Aplicación de escritorio</option>
+                <option>Inteligencia artificial / datos</option>
+                <option>Servidores / infraestructura</option>
+                <option>Diseño UI/UX</option>
+                <option>Base de datos / API</option>
+                <option>Automatización</option>
+                <option>Mantenimiento / soporte</option>
+                <option>Otro</option>
+              </select>
+            </label>
+            <label>Presupuesto
+              <select name="presupuesto">
+                <option>Aún no lo sé</option>
+                <option>Menos de $200</option>
+                <option>$200 – $500</option>
+                <option>$500 – $1,000</option>
+                <option>Más de $1,000</option>
+              </select>
+            </label>
+          </div>
+          <label>Describe tu proyecto *<textarea name="mensaje" rows="4" required placeholder="¿Qué necesitas? ¿Para cuándo?"></textarea></label>
+          <!-- Trampa anti-bots: los humanos no la ven -->
+          <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <p class="form__msg" id="formMsg" role="status"></p>
           <div class="form__actions">
-            <button type="submit" class="btn">Enviar por WhatsApp</button>
-            <button type="button" class="btn btn--ghost" id="sendMail">Enviar por correo</button>
+            <button type="submit" class="btn btn--wa" data-via="wa"><svg class="ico"><use href="#i-wa"/></svg> Enviar por WhatsApp</button>
+            <button type="submit" class="btn btn--ghost" data-via="mail"><svg class="ico"><use href="#i-mail"/></svg> Enviar por correo</button>
           </div>
         </form>
       </div>
@@ -315,14 +417,15 @@
 
   <footer class="footer">
     <div class="container footer__inner">
-      <p><b>DANTHONY MH</b> — Desarrollo de software y soluciones tecnológicas.</p>
-      <p class="muted">© <span id="year"></span> DANTHONY MH. Precios referenciales en USD, sujetos a revisión.</p>
+      <a href="#inicio" class="brand"><span class="brand__mark">DM</span><span class="brand__name">DANTHONY<span>MH</span></span></a>
+      <p class="muted">Desarrollo de software y soluciones tecnológicas · Bolivia e internacional</p>
+      <p class="muted small">© <span id="year"></span> DANTHONY MH. Precios referenciales en USD, sujetos a revisión.</p>
     </div>
   </footer>
 
-  <a id="waFloat" class="wa-float" href="#" target="_blank" rel="noopener" aria-label="Escríbeme por WhatsApp">
-    <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3Z"/></svg>
-  </a>
+  <button type="button" id="waFloat" class="wa-float" aria-label="Escríbeme por WhatsApp">
+    <svg class="ico"><use href="#i-wa"/></svg>
+  </button>
 
   <script src="main.js"></script>
 </body>
